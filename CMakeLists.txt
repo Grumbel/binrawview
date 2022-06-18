@@ -18,12 +18,16 @@ cmake_minimum_required(VERSION 3.0)
 project(binrawview)
 
 find_package(PkgConfig REQUIRED)
+find_package(fmt REQUIRED)
 
 pkg_search_module(SDL2 REQUIRED sdl2)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-add_executable(binrawview src/main.cpp)
+file(GLOB BINRAWVIEW_SOURCES src/*.cpp)
+add_executable(binrawview ${BINRAWVIEW_SOURCES})
 target_include_directories(binrawview SYSTEM PUBLIC ${SDL2_INCLUDE_DIRS})
-target_link_libraries(binrawview ${SDL2_LIBRARIES})
+target_link_libraries(binrawview fmt ${SDL2_LIBRARIES})
+
+install(TARGETS binrawview)
 
 # EOF #
