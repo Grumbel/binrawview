@@ -12,8 +12,10 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-      in rec {
-        packages = flake-utils.lib.flattenTree {
+      in {
+        packages = rec {
+          default = binrawview;
+
           binrawview = pkgs.stdenv.mkDerivation {
             pname = "binrawview";
             version = "0.0.0";
@@ -32,11 +34,10 @@
               fmt
               SDL2
             ] ++ [
-              tinycmmc.defaultPackage.${system}
+              tinycmmc.packages.${system}.default
             ];
           };
         };
-        defaultPackage = packages.binrawview;
       }
     );
 }
